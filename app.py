@@ -48,7 +48,7 @@ def Ranking():
     else:
         return redirect(url_for("Inicio"))
 
-
+dsagfkdsafdkjsa
 
 
 @app.route('/consultar_tiempo',methods=['POST','GET'])
