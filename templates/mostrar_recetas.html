@@ -1,0 +1,9 @@
+{% extends "base_template.html" %}
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+    <h1> {{ titulo }}</h1>
+    {% for una_receta in recetas %}
+        <h2>{{ una_receta.nombre }}</h2>
+    {% endfor %}
+{% endblock %}
