@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask, redirect,render_template,request, session,url_for
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 
@@ -14,12 +14,19 @@ usuario=None
 def Inicio():
     return render_template('inicio.html')
 
+@app.route('/error')
+def Error():
+    mensaje=request.args['mensaje']
+    session['mensaje']=mensaje
+    return render_template(mensaje)
+
 @app.route('/menu',methods=['POST','GET'])
 def Menu():
     global usuario
     if request.method =='POST':
         if not request.form['email'] or not request.form['password']:
-            return  render_template('inicio.html')
+            mensaje='ingrese los datos'
+            return  redirect(url_for('Error',mensaje))
         else:
             usuario_actual=Usuario.query.filter_by(correo=request.form['email']).first()
             if usuario_actual == None:
@@ -47,8 +54,6 @@ def Ranking():
         return render_template("mostrar_recetas.html", recetas=lista,titulo='Ranking')
     else:
         return redirect(url_for("Inicio"))
-
-dsagfkdsafdkjsa
 
 
 @app.route('/consultar_tiempo',methods=['POST','GET'])
