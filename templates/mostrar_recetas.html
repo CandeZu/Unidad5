@@ -6,4 +6,6 @@
     {% for una_receta in recetas %}
         <h2>{{ una_receta.nombre }}</h2>
     {% endfor %}
+    <br><br><a href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+
 {% endblock %}

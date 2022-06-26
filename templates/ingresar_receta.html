@@ -1,0 +1,15 @@
+{% extends "base_template.html" %}
+{% block title %}Ingresar Receta{% endblock %}
+{% block content %}
+        <h1>Ingresar una receta</h1>
+        <form action="{{url_for('IngresarReceta')}}" method="post">
+            <label for="nombre">Nombre de la receta:</label>
+            <input type="text" name="nombre">
+            <label for="tiempo">Tiempo aproximado en minutos:</label>
+            <input type="number" name="tiempo">
+            <label for="descripcion">Describa cómo se realiza:</label>
+            <textarea name="descripcion" cols="50" rows="10"></textarea>
+            <input type="submit" value="Guardar">
+        </form>
+        <br><br><a href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+{%endblock%}

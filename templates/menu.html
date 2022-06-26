@@ -3,5 +3,11 @@
 
 {% block content %}
     <h1>MENU DE OPCIONES</h1>
+    <h2>Hola,{{persona.nombre}}</h2>
+    <h3>Eliga una Opción</h3>
     <a href="{{ url_for('Ranking') }}">Ranking</a>
+    <a href="{{ url_for('IngresarReceta') }}">Compartir Receta</a>
+
+    <br><br><a href="{{ url_for('Inicio') }}" >Cerrar sesion</a><br><br>
+
 {% endblock %}
