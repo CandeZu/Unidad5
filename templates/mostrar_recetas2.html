@@ -3,8 +3,9 @@
 
 {% block content %}
     <h1> {{ titulo }}</h1>
-    {% for una_receta in recetas %}
-        <h2>{{ una_receta.nombre }}</h2>
+    {% for unaReceta in recetas %}
+        <br><br><a href="{{ url_for('mostrar',id=unaReceta.id) }}" >{{unaReceta.nombre}}</a><br><br>
+        <a>Me gustas:{{unaReceta.cantidadmegusta}}</a>
     {% endfor %}
     <br><br><a href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
 

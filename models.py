@@ -22,6 +22,7 @@ class Receta(db.Model):
     cantidadmegusta=db.Column(db.Integer,nullable=False)
     usuarioid=db.Column(db.Integer,nullable=False)
     ingredientes=db.relationship('Ingrediente',backref='receta')
+   
 
 class Usuario(db.Model):
     __tablename__='usuario'
