@@ -1,11 +1,10 @@
-from functools import reduce
-from tkinter import Menu
-from tkinter.messagebox import RETRY
-from unittest import removeResult
-from flask import Flask, redirect,render_template,request, session,url_for
+import re
+from flask import Flask, redirect,render_template,request,session,url_for
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 from datetime import datetime
+
+from sqlalchemy import desc
 
 app=Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -90,21 +89,63 @@ def RecetaAgregada(nombre):
 @app.route('/ranking',methods=['POST','GET'])
 def Ranking():
     if usuario != None:
-        lista:list = Receta.query.all()
-        lista.sort(key=lambda receta:receta.cantidadmegusta)
-        lista = lista[0:5]
-        return render_template("mostrar_recetas.html", recetas=lista,titulo='Ranking')
+        q1=Receta.query.order_by(Receta.cantidadmegusta.desc()).limit(5).all()
+        q2=Usuario.query.all()
+        return render_template("mostrar_recetas1.html", recetas=q1,usuarios=q2,titulo='Ranking')
     else:
         return redirect(url_for("Inicio"))
 
 
 @app.route('/consultar_tiempo',methods=['POST','GET'])
 def ConsultarPorTiempo():
-    pass
+    if usuario != None:
+        if request.method == 'POST':
+            if request.form['tiempo'] == None:
+                return render_template('mostrar_tiempo.html')
+            else:
+                Untiempo=request.form['tiempo']
+                recetas=Receta.query.filter(Receta.tiempo <= Untiempo).all()
+                return render_template('mostrar_recetas2.html', recetas=recetas,titulo='Recetas menor a {} minutos'.format(Untiempo))
+        else:
+            return render_template('mostrar_tiempo.html')
+    else:
+        return redirect(url_for("Inicio"))
 
 @app.route('/consultar_ingrediente',methods=['POST','GET'])
 def ConsultarPorIngrediente():
+    if usuario != None:
+        if request.method == 'POST':
+            if request.form['ingrediente'] == None:
+                return render_template('mostrar_ingrediente.html')
+            else:
+                Uningrediente=request.form['ingrediente']
+                ingredientes=Ingrediente.query.filter_by(nombre=Uningrediente).all()
+                for ingrediente in ingredientes:
+                return render_template('mostrar_recetas2.html', recetas=recetas,titulo='Recetas con el ingrediente {}'.format(UnIngrediente))
+        else:
+            return render_template('mostrar_ingrediente.html')
+    else:
+        return redirect(url_for("Inicio"))
     pass
+
+@app.route('/receta/<id>',methods=['POST','GET'])
+def mostrar(id):
+    if usuario !=None:
+        receta=Receta.query.filter_by(id=id).first()
+        ingredientes=Ingrediente.query.filter_by(recetaid=id).all()
+        persona=Usuario.query.filter_by(id=receta.usuarioid).first()
+        return render_template('Receta.html',receta=receta,persona=persona,ingredientes=ingredientes,usuario=usuario)
+    else:
+        return redirect(url_for("Inicio"))
+@app.route('/megusta/<id>',methods=['POST','GET'])
+def darLike(id):
+    if usuario != None:
+        unaReceta=Receta.query.filter_by(id=id).first()
+        unaReceta.cantidadmegusta=Receta.cantidadmegusta +1
+        db.session.commit()
+        return redirect(url_for('Ingreso'))
+    else:
+        return redirect(url_for("Inicio"))
 
 if __name__ == '__main__':
     app.run(debug=True)
