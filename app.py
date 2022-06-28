@@ -119,9 +119,9 @@ def ConsultarPorIngrediente():
                 return render_template('mostrar_ingrediente.html')
             else:
                 Uningrediente=request.form['ingrediente']
-                ingredientes=Ingrediente.query.filter_by(nombre=Uningrediente).all()
-                for ingrediente in ingredientes:
-                return render_template('mostrar_recetas2.html', recetas=recetas,titulo='Recetas con el ingrediente {}'.format(UnIngrediente))
+                search='%{}%'.format(Uningrediente)
+                recetas = Receta.query.join(Receta.ingredientes).filter(Ingrediente.nombre.like(search)).all()
+                return render_template('mostrar_recetas2.html', recetas=recetas,titulo='Recetas con el ingrediente {}'.format(Uningrediente))
         else:
             return render_template('mostrar_ingrediente.html')
     else:
