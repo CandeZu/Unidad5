@@ -395,6 +395,16 @@ a#dropdownMenuLink{
     margin-top: 90px;
 }
 
+a.receta:hover{
+    color: #b3b3b3;
+    text-decoration: none;
+}
+
+.like{
+    width: 222px;
+    margin-left: 850px;
+    margin-right: 500px;
+}
 
 footer{
     width: 100%;
