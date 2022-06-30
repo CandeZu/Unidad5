@@ -42,6 +42,14 @@ def Ingreso():
     else:
         return render_template('menu.html',persona=usuario)
 
+@app.route("/")
+def Menu():
+    global usuario
+    if usuario is not None:
+        return render_template("menu.html")
+    else:
+        return redirect(url_for("Ingreso"))
+
 @app.route('/ingresar_receta',methods=['POST','GET'])
 def IngresarReceta():
     if usuario != None:
@@ -146,6 +154,12 @@ def darLike(id):
         return redirect(url_for('Ingreso'))
     else:
         return redirect(url_for("Inicio"))
+
+@app.route("/CerrarSesion")
+def cerrarSesion():
+    global usuario
+    usuario = None
+    return redirect(url_for("Inicio"))
 
 if __name__ == '__main__':
     app.run(debug=True)
