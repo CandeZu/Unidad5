@@ -1,6 +1,10 @@
 {% extends "base_template.html" %}
 {% block title %}Ingrediente de la receta{% endblock %}
-{% block content%} 
-    <h1>La receta {{nombre}} fue agregada con éxito</h1>
-    <br><br><a href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+{% block content%}
+<div class="hero-image6">
+    <div id="hero-text"> 
+    <h1 class="title3">La receta {{nombre}} fue agregada con éxito</h1>
+    <br><br><a class="botons" href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+    </div>
+</div>
 {%endblock%}

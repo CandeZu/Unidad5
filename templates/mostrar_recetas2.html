@@ -2,11 +2,15 @@
 {% block title %}{{ titulo }}{% endblock %}
 
 {% block content %}
-    <h1> {{ titulo }}</h1>
-    {% for unaReceta in recetas %}
-        <br><br><a href="{{ url_for('mostrar',id=unaReceta.id) }}" >{{unaReceta.nombre}}</a><br><br>
-        <a>Me gustas:{{unaReceta.cantidadmegusta}}</a>
-    {% endfor %}
-    <br><br><a href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+<div class="hero-image3">
+    <div id="hero-text">
+        <h1 class="title3"> {{ titulo }}</h1>
+        {% for unaReceta in recetas %}
+            <br><h2 class="receta" href="{{ url_for('mostrar',id=unaReceta.id) }}" >{{unaReceta.nombre}}</h2><br>
+            <p><i class="fa-solid fa-thumbs-up"></i> Me gustas: {{unaReceta.cantidadmegusta}}</p>
+        {% endfor %}
+            <br><br><a class="botons" href="{{ url_for('Ingreso') }}" >Menu principal</a><br><br>
+    </div>
+</div>
 
 {% endblock %}
